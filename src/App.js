@@ -5,6 +5,7 @@ function Food({name, pic}) {
   // {fav} = props; {fav}
   // props.fav
   return (
+    // div로 묶어서 리턴한다. h1, img 따로 리턴하는 게 아니라
     <div>
       <h1>Best Player: {name}</h1>,
       <img src={pic} ></img>
@@ -33,17 +34,16 @@ const players = [
   }
 ];
 
-players.map((friend) => {
-  return friend + "$";
-})
+// map 함수에 컴포넌트를 리턴하는 함수를 분리
+const renderPlayers = (player) => {
+  return <Food name = {player.name} pic = {player.image} />;
+}
 
 function App() {
+  console.log(players.map(renderPlayers))
   return (
     <div>
-      <h1>Hello World</h1>
-      {players.map(player => (
-        <Food name = {player.name} pic = {player.image} />
-      ))}
+      {players.map(renderPlayers)}
     </div>
     
   ); 

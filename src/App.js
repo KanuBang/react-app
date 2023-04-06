@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import Movie from "./Movie";
 import "./App.css"
+import "./Movie.css"
 
 class App extends React.Component {
   state = {

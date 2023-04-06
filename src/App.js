@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Movie from "./Movie";
 
 class App extends React.Component {
   state = {
@@ -12,9 +13,9 @@ class App extends React.Component {
       data: {
         data: {movies}
       }
-    } = await axios.get("https://yts-proxy.now.sh/list_movies.json")
-    
-    this.setState({movies})
+    } = await axios.get("https://yts-proxy.now.sh/list_movies.json?sort_by=rating")
+    //sort_by=rating
+    this.setState({movies, isLoading: false})
    
   }
   // 컴포넌트가 그려지면(render) 호출되는 생명주기 함수 
@@ -24,19 +25,38 @@ class App extends React.Component {
   }
 
   render( ) {
-    const {isLoading} = this.state;
-    return <div>{isLoading ? "Loading..." : "we are ready"} </div>;
+    const {isLoading, movies} = this.state;
+    return <div>{isLoading ? "Loading..." : movies.map((movie) => {
+      console.log(movie)
+      return (
+        <Movie
+          id={movie.id}
+          year={movie.year}
+          title={movie.title}
+          summary={movie.summary}
+          poster={movie.medium_cover_image}
+        />
+      )
+    })} </div>;
   }
 
-  /* 
-  1. render로 컴포넌트를 그림 
-  2. 처음에는 state가 true 이기 때문에 Loading...이 화면에 표시됨
-  3. 컴포넌트가 그려지고 나서 componentDidMount가 실행
-  4. setState 6초 후에 isLoading state를 false로 바꿈
-  5. 화면에 we are ready가 표시됨
-
-  => 이 componentDidMount로 영화 데이터를 로딩한다.
-  */
+/* Flow
+1. render 함수 실행
+2. isLoading = true -> "Loading..."
+3. render 끝
+4. componentDidMount 실행
+5. this.getMovies() 실행
+6. api 끌어와서 promise 객체 movies에 저장
+7. setState로 동적 데이터 업데이트
+8. 동적 데이터가 업데이트 되었기 때문에 rerender
+9. render 함수 실행
+10. isLoading = true -> movies.map 실행
+11. map 함수의 콜백 함수 실행
+12. Movie 컴포넌트에 props 전달
+13. Movie 컴포넌트에서 <div><h4>{title}</h4></div> 리턴
+14. 콜백함수가 13번 결과값을 리턴
+15. 그 결과값을 렌더링
+*/
 }
 
 export default App;

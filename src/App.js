@@ -3,21 +3,19 @@ import PropTypes from "prop-types"
 
 
 function Food({name, pic, rating}) {
-  // {fav} = props; {fav}
-  // props.fav
+
   return (
-    // div로 묶어서 리턴한다. h1, img 따로 리턴하는 게 아니라
+
     <div>
       <h1>Best Player: {name}</h1>
       <h4>rating: {rating}</h4>
-      {/*alt 속성은 이미지가 로드되지 못한 경우 대신 표시될 텍스트를 제공 */}
+      
       <img src={pic} alt={name}></img>
     </div>
   )
 }
  
-// map 함수는 배열의 모든 원소마다 특정 작업을 하는 함수를 적용하고
-// 그 함수가 반환한 결과를 모아서 배열로 반환한다.
+
 const players = [
   /*id 부여: 컴포넌트가 서로 다르다는 걸 알리기 위하여 */
   {
@@ -46,7 +44,7 @@ const players = [
   }
 ];
 
-//prop-types는 컴포넌트가 전달 받은 props가 정말 내가 원하는 값인지 확인해 준다.
+
 
 function App() {
   
@@ -60,9 +58,6 @@ function App() {
   ); 
 }
 
-// 대문자 P 아니고 소문자임
-// Food 컴포넌트의 props 이름과 일치해야 함
-// isRequired는 필수라는 뜻이다. 즉, 그 props가 필수적인 항목이 된다.
 Food.propTypes = {
   name: PropTypes.string.isRequired,
   pic: PropTypes.string.isRequired,

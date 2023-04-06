@@ -1,16 +1,26 @@
 import React from "react";
-
+import axios from "axios";
 
 class App extends React.Component {
   state = {
     isLoading: true,
+    movies: [],
   };
 
+  getMovies = async ( ) => {
+    const {
+      data: {
+        data: {movies}
+      }
+    } = await axios.get("https://yts-proxy.now.sh/list_movies.json")
+    
+    this.setState({movies})
+   
+  }
   // 컴포넌트가 그려지면(render) 호출되는 생명주기 함수 
   componentDidMount( ) {
-    setTimeout(() => {
-      this.setState({isLoading: false});
-    }, 6000)
+    //영화 데이터 로딩
+    this.getMovies()
   }
 
   render( ) {
